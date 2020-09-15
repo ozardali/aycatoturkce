@@ -26,20 +26,20 @@
           </div>
         </div>
       </el-form>
+    </div>
+    <hr class="mt-5">
+    <div class="card mt-5" v-loading="tLoading">
+      <div class="card-body">
+        <h2 class="card-title">Mevcut Söylenmişler</h2>
+
+        <el-tag class="mr-2" v-on:click="move(single.ayca)" v-for="(single, index) in data" :key="single.id">{{ single.ayca }}
+        </el-tag>
+
+      </div>
       <div class="card-footer text-right">
         <a style="font-size: 12px" class="card-link text-muted" href="https://goksel.dev" target="_blank">
           <img class="img-fluid" style="height:20px" src="goksel.png">
           tarafından kodlandı.</a>
-      </div>
-    </div>
-    <div class="card mt-5" v-loading="tLoading">
-      <div class="card-body">
-        <h2 class="card-title">Veritabanı</h2>
-
-        <el-tag class="mr-2" v-on:click="move(single.ayca)" v-for="(single, index) in data" :key="single.id"
-                size="medium">{{ single.ayca }}
-        </el-tag>
-
       </div>
     </div>
   </div>

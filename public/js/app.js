@@ -106994,14 +106994,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      width: '',
       bLoading: false,
       translateForm: {
         text: '',
@@ -107012,9 +107009,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       activeIndex2: '1'
     };
   },
+  created: function created() {
+    this.getWidth();
+  },
 
   methods: {
-    //centerDialogVisible = false
+    getWidth: function getWidth() {
+      if (window.innerWidth < 760) {
+        this.width = "90%";
+      } else {
+        this.width = "30%";
+      }
+    },
     sendTranslate: function sendTranslate() {
       var _this = this;
 
@@ -107025,6 +107031,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this.$notify.info({
             title: 'Mevcut Çeviri',
             message: "Böyle bir çeviri zaten mevcut."
+          });
+          _this.bLoading = false;
+        } else if (response.status === 202) {
+          _this.$notify.info({
+            title: 'MHata',
+            message: "Boş çeviri gönderilemez."
           });
           _this.bLoading = false;
         } else if (response.status === 201) {
@@ -107146,27 +107158,17 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c(
-            "el-submenu",
-            { staticClass: "float-right", attrs: { index: "2" } },
-            [
-              _c("template", { slot: "title" }, [
-                _c("b", [_vm._v("Yeni Çeviri Öner")])
-              ]),
-              _vm._v(" "),
-              _c(
-                "el-menu-item",
-                {
-                  attrs: { index: "2-1" },
-                  on: {
-                    click: function($event) {
-                      _vm.centerDialogVisible = true
-                    }
-                  }
-                },
-                [_vm._v("Çeviri Yolla")]
-              )
-            ],
-            2
+            "el-menu-item",
+            {
+              staticClass: "float-right",
+              attrs: { index: "9" },
+              on: {
+                click: function($event) {
+                  _vm.centerDialogVisible = true
+                }
+              }
+            },
+            [_c("b", [_vm._v("Yeni Çeviri Öner")])]
           )
         ],
         1
@@ -107178,7 +107180,7 @@ var render = function() {
           attrs: {
             title: "Yeni Çeviri Gönderme Formu",
             visible: _vm.centerDialogVisible,
-            width: "30%",
+            width: _vm.width,
             center: ""
           },
           on: {
@@ -107194,8 +107196,22 @@ var render = function() {
             ),
             _c("br"),
             _vm._v(
-              "\n      Çeviri gönderen kişinin IP adresi güvenlik sebebiyle kaydedilerek saklanacaktır."
-            )
+              "\n    Çeviri gönderen kişinin IP adresi güvenlik sebebiyle kaydedilerek saklanacaktır."
+            ),
+            _c("br"),
+            _vm._v("\n    Eklediğiniz kelimenin gözükmesi biraz "),
+            _c(
+              "a",
+              {
+                attrs: {
+                  href: "https://www.youtube.com/watch?v=KyIic74yJRY",
+                  target: "_blank",
+                  title: "Ayça Özefe - Zaman Alır dinle :)"
+                }
+              },
+              [_c("b", [_vm._v("zaman alır...")])]
+            ),
+            _vm._v(" 😊")
           ]),
           _c("br"),
           _vm._v(" "),
@@ -107217,7 +107233,7 @@ var render = function() {
               _c("div", { staticClass: "row pt-4" }, [
                 _c(
                   "div",
-                  { staticClass: "col-lg-6 col-xs-12" },
+                  { staticClass: "col-lg-6 col-xs-12 mb-3" },
                   [
                     _c("el-input", {
                       attrs: {
@@ -107241,12 +107257,12 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "col-lg-6 col-xs-12" },
+                  { staticClass: "col-lg-6 col-xs-12 mb-3" },
                   [
                     _c("el-input", {
                       attrs: {
                         type: "textarea",
-                        placeholder: "Türkçe karşılığını giriniz.",
+                        placeholder: "Türkçe karşılığını giriniz",
                         rows: 3,
                         maxlength: "60",
                         "show-word-limit": ""
@@ -107263,10 +107279,10 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-12 pt-2" }, [
+                _c("div", { staticClass: "col-12" }, [
                   _c("small", [
                     _vm._v(
-                      "* gönderilen çeviriler onaylandıktan sonra görülebilecektir."
+                      "* gönderilen çeviriler manuel olarak kontrol edilip onaylanmaktadır."
                     )
                   ])
                 ])
@@ -108393,12 +108409,12 @@ var render = function() {
                 )
               ])
             ]
-          ),
-          _vm._v(" "),
-          _vm._m(0)
+          )
         ],
         1
       ),
+      _vm._v(" "),
+      _c("hr", { staticClass: "mt-5" }),
       _vm._v(" "),
       _c(
         "div",
@@ -108418,7 +108434,9 @@ var render = function() {
             "div",
             { staticClass: "card-body" },
             [
-              _c("h2", { staticClass: "card-title" }, [_vm._v("Veritabanı")]),
+              _c("h2", { staticClass: "card-title" }, [
+                _vm._v("Mevcut Söylenmişler")
+              ]),
               _vm._v(" "),
               _vm._l(_vm.data, function(single, index) {
                 return _c(
@@ -108426,7 +108444,6 @@ var render = function() {
                   {
                     key: single.id,
                     staticClass: "mr-2",
-                    attrs: { size: "medium" },
                     on: {
                       click: function($event) {
                         return _vm.move(single.ayca)
@@ -108438,7 +108455,9 @@ var render = function() {
               })
             ],
             2
-          )
+          ),
+          _vm._v(" "),
+          _vm._m(0)
         ]
       )
     ],

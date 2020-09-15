@@ -27,7 +27,7 @@ class MainController extends Controller
     {
 
         if($request->text == null || $request->translate == null){
-            return response()->json('Boş veri gönderilemez.', 200);
+            return response()->json('Boş veri gönderilemez.', 202);
         }
         $is_exist = Translation::where('ayca', $request->text)->first();
 
