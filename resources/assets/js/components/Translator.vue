@@ -32,7 +32,7 @@
       <div class="card-body">
         <h2 class="card-title">Mevcut Söylenmişler</h2>
 
-        <el-tag class="mr-2" v-on:click="move(single.ayca)" v-for="(single, index) in data" :key="single.id">{{ single.ayca }}
+        <el-tag class="mr-2 mb-1" v-on:click="move(single.ayca)" v-for="(single, index) in data" :key="single.id">{{ single.ayca }}
         </el-tag>
 
       </div>
