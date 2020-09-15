@@ -1,10 +1,12 @@
 <template>
-  <div class="container mt-5">
-    <h1>Ayçaca Türkçe Çeviri</h1>
-    <div class="card card-default mt-5">
+  <div class="container">
+    <header-menu></header-menu>
+    <div class="pt-5"></div>
+    <div class="card mt-3">
       <el-form :model="translateForm" ref="translateForm">
         <div class="card-body">
-          <div class="row"  v-loading="loading">
+          <h2 class="card-title">Ayçaca Türkçe Çeviri</h2>
+          <div class="row mt-3" v-loading="loading">
             <div class="col-6">
               <el-input
                   v-on:input="eventText(translateForm.text)"
@@ -27,7 +29,17 @@
       <div class="card-footer text-right">
         <a style="font-size: 12px" class="card-link text-muted" href="https://goksel.dev" target="_blank">
           <img class="img-fluid" style="height:20px" src="goksel.png">
-           tarafından kodlandı.</a>
+          tarafından kodlandı.</a>
+      </div>
+    </div>
+    <div class="card mt-5" v-loading="tLoading">
+      <div class="card-body">
+        <h2 class="card-title">Veritabanı</h2>
+
+        <el-tag class="mr-2" v-on:click="move(single.ayca)" v-for="(single, index) in data" :key="single.id"
+                size="medium">{{ single.ayca }}
+        </el-tag>
+
       </div>
     </div>
   </div>
@@ -37,28 +49,57 @@
 export default {
   data() {
     return {
-      loading:false,
+      data: [],
+      tLoading: true,
+      loading: false,
       translateForm: {
         text: ''
       },
       result: ''
     }
   },
+  created() {
+    this.getTag();
+  },
   methods: {
+    move: function (message) {
+      this.translateForm.text = message;
+      this.eventText()
+    },
+    getTag() {
+      axios.get("api/v1/get-list")
+          .then((response) => {
+            this.data = response.data;
+            console.log(response.data);
+            this.tLoading = false;
+          }).catch((err) => {
+        this.tLoading = false;
+        this.$notify.error({
+          title: 'Hata Oluştur',
+          message: "Bir hata oluştu, sayfayı yenileyip tekrar deneyin :)"
+        });
+
+      });
+      console.log('hi');
+    },
+
     async eventText() {
       this.result = ''
       let data = this.translateForm;
       this.loading = true;
       return axios.post('api/v1/translate', data).then(response => {
         if (response.status === 200) {
-            this.result = response.data.turkce;
-          this.loading=false;
-        }
-        else if (response.status === 202) {
-            this.result = "Ayçaca'da henüz böyle bir kelime yok..";
+          this.result = response.data.turkce;
           this.loading = false;
-        }
-        else {
+        } else if (response.status === 202) {
+          if (this.translateForm.text == '') {
+            this.result = "";
+            this.loading = false;
+          } else {
+            this.result = "Ayçaca'da henüz böyle bir kelime yok..";
+            this.loading = false;
+          }
+        } else {
           this.$notify.error({
             title: 'Hata',
             message: "Bir şeyleri düzgün kodlayamamış yazılımcı arkadaş. Ona ulaşmak için me@goksel.dev'e yazabilirsin."

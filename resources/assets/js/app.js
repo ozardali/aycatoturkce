@@ -22,6 +22,7 @@ Vue.use(ElementUI, { locale });
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('header-menu', require('./components/Header.vue'));
 Vue.component('translator', require('./components/Translator.vue'));
 
 const app = new Vue({

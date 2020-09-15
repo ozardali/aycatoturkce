@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 */
 Route::group(['prefix'=>'v1'],function () {
     Route::post('translate', 'MainController@translate');
-});
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('get-list', 'MainController@getList');
+    Route::middleware('throttle:100,1')->group(function () {
+        Route::post('create/translate', 'MainController@createTranslate');
+    });
 });
