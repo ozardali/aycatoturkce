@@ -27,14 +27,26 @@
         </div>
       </el-form>
     </div>
-    <hr class="mt-5">
+    <div class="pt-5"></div>
+
     <div class="card mt-5" v-loading="tLoading">
       <div class="card-body">
+        <div class="row">
+          <div class="col-6">
         <h2 class="card-title">Mevcut Söylenmişler</h2>
+          </div>
+          <div class="col-6 text-right">
+            <el-button type="primary" v-on:click="list_show = !list_show">Göster / Gizle <i class="el-icon-d-caret"></i></el-button>
 
+          </div>
+        </div>
+        <div v-show="list_show" class="pt-4">
         <el-tag class="mr-2 mb-1" v-on:click="move(single.ayca)" v-for="(single, index) in data" :key="single.id">{{ single.ayca }}
         </el-tag>
-
+        </div>
+        <div v-if="list_show == false">
+          <p class="text-center pt-3">Söylenmişleri görmek için <b>Göster / Gizle</b> butonuna tıklayın.</p>
+        </div>
       </div>
       <div class="card-footer text-right">
         <a style="font-size: 12px" class="card-link text-muted" href="https://goksel.dev" target="_blank">
@@ -50,6 +62,7 @@ export default {
   data() {
     return {
       data: [],
+      list_show : false,
       tLoading: true,
       loading: false,
       translateForm: {
