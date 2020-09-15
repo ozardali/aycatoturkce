@@ -35,7 +35,7 @@ class MainController extends Controller
             return response()->json('Böyle bir çeviri zaten veritabanında mevcut', 200);
         }
         $now = Carbon::now();
-        $newTranslate = new Translation();
+        $newTranslate = new Word();
         $newTranslate->ayca = $request->text;
         $newTranslate->turkce = $request->translate;
         $newTranslate->status = false;
