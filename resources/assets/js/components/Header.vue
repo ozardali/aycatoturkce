@@ -8,8 +8,8 @@
       <el-menu-item index="7"><a href="https://twitter.com/aycaozefe" target="_blank">Twitter</a></el-menu-item>
       <el-menu-item index="3"><a href="http://discord.gg/aycaozefe" target="_blank">Discord</a></el-menu-item>
       <el-menu-item index="8"><a href="https://aycaozefe.com" target="_blank">Web</a></el-menu-item>
-      <el-menu-item index="9" class="float-right" @click="centerDialogVisible = true"><b>Yeni Çeviri Öner</b>
-      </el-menu-item>
+      <el-menu-item index="10" class="float-right" @click="centerDialogVisible = true"><b>Yeni Çeviri Öner</b> </el-menu-item>
+      <el-menu-item index="11" class="float-right" @click="hataVer()"><b><i class="el-icon-moon"></i></b>  </el-menu-item>
     </el-menu>
 
     <el-dialog
@@ -75,6 +75,15 @@ export default {
     this.getWidth();
   },
   methods: {
+    hataVer(){
+      this.$notify({
+        title: 'Yıkılmam Asla',
+        dangerouslyUseHTMLString: true,
+        offset: 100,
+        message: '<strong><a href="https://www.youtube.com/watch?v=XnSJFzixPhM" target="_blank"><i class="el-icon-video-play"></i> Güçlüyüm değilsin farkında..</a></strong>',
+        duration: 0
+      });
+    },
     getWidth() {
       if (window.innerWidth < 760) {
         this.width = "90%";
